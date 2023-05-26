@@ -22,16 +22,7 @@ export const HomeWelcome = () => {
 
     return (
         <>
-            <Flex
-                justify={"center"}
-                mx={"auto"}
-                bgColor={"gray"}
-                w={"full"}
-                h={"full"}
-                bgImage={
-                    "linear-gradient(to bottom right, rgb(0, 0, 153), rgb(255, 204, 255))"
-                }
-            >
+            <Flex justify={"center"} mx={"auto"} w={"full"} h={"full"}>
                 <Box mt={225} textAlign={"center"}>
                     {!isAuthed() ? (
                         <>

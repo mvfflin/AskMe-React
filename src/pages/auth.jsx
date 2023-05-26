@@ -7,7 +7,6 @@ import {
     TabPanels,
     Tabs,
     Text,
-    useColorModeValue,
 } from "@chakra-ui/react";
 import { LoginPanel } from "../components/auth/login";
 import { RegisterPanel } from "../components/auth/register";
@@ -18,15 +17,15 @@ import { useNavigate } from "react-router-dom";
 export const AuthPage = () => {
     const isAuthed = useIsAuthenticated();
     const navigate = useNavigate();
-    const bgColor = useColorModeValue("gray.200", "gray.800");
-
     return (
         <>
             {!isAuthed() ? (
                 <Flex
                     w={"full"}
                     h={"full"}
-                    bgColor={bgColor}
+                    bgImg={
+                        "linear-gradient(to bottom right, rgb(0, 0, 153), rgb(255, 204, 255))"
+                    }
                     justify={"center"}
                 >
                     <Box
@@ -36,7 +35,8 @@ export const AuthPage = () => {
                         w={800}
                         h={600}
                         borderRadius={25}
-                        bgColor={"gray.800"}
+                        bgColor={"blackAlpha.700"}
+                        backdropFilter={"blur"}
                     >
                         <Tabs
                             isFitted

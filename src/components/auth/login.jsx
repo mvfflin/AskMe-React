@@ -24,29 +24,55 @@ export const LoginPanel = () => {
     const { makeToast } = setToast();
 
     const loginSubmit = async () => {
-        const res = await fetch(
-            "https://cc29-111-94-109-109.ngrok-free.app/login",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    email: formik.values.email,
-                    password: formik.values.password,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: formik.values.email,
+                password: formik.values.password,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         if (res.status == 202) {
+            makeToast(
+                "Failed to login!",
+                "User with that email doesn't exists.",
+                "error"
+            );
+            console.log("test");
+        } else if (res.status == 201) {
             makeToast(
                 "Failed to login!",
                 "Your password is incorrect. Please try again!",
                 "error"
             );
-            console.log("test");
-        } else if (res.status == 201) {
-            makeToast("Failed to login!", "User not found!", "error");
             console.log("test2");
+        } else if (res.status == 500) {
+            makeToast(
+                "Failed to login!",
+                "Something is wrong in database! Please wait...",
+                "error"
+            );
+        } else if (res.status == 200) {
+            const data = await res.json();
+            makeToast(
+                "Success!",
+                "Redirecting to account panel now...",
+                "success"
+            );
+            console.log(data);
+            signIn({
+                token: data.token,
+                tokenType: "Bearer",
+                expiresIn: 30,
+                authState: {
+                    id: data.id,
+                    username: data.username,
+                    email: data.email,
+                },
+            });
+            return navigate("/account/admin");
         }
     };
 
@@ -73,7 +99,7 @@ export const LoginPanel = () => {
 
     return (
         <Flex>
-            <Box w={"full"} h={"full"} textColor={"white"}>
+            <Box w={"full"} h={"full"} textColor={"white"} mt={"60px"}>
                 <Heading my={7}>Log-in to your existing account.</Heading>
 
                 <form onSubmit={formik.handleSubmit}>

@@ -6,8 +6,6 @@ import {
     HStack,
     Text,
     VStack,
-    useColorMode,
-    useColorModeValue,
 } from "@chakra-ui/react";
 import "@fontsource/lato";
 import { motion } from "framer-motion";
@@ -16,14 +14,6 @@ import { NavInvisibleMenuItem, NavMenuItem } from "./navbarButton";
 import { BiCard, BiCircle, BiHome, BiMenu, BiUser } from "react-icons/bi";
 import { useIsAuthenticated } from "react-auth-kit";
 import Hamburger from "hamburger-react";
-import {
-    bgDark,
-    bgLight,
-    navBgDark,
-    navBgLight,
-    textDark,
-    textLight,
-} from "../../utils/themeConfigs";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 export const Navbar = () => {
@@ -31,15 +21,6 @@ export const Navbar = () => {
     const [isOpen, onToggle] = useState(false);
     const path = window.location.pathname;
     const isAuthed = useIsAuthenticated();
-    const { colorMode, toggleColorMode } = useColorMode();
-    const bgColorNav = useColorModeValue(navBgDark, navBgLight);
-    const logoColorNav = useColorModeValue(textDark, textLight);
-    const [theMode, setMode] = useState(true);
-
-    const toggleColorAndMode = () => {
-        setMode(!theMode);
-        toggleColorMode();
-    };
 
     const toggleMenu = () => {
         onToggle(!isOpen);
@@ -68,10 +49,10 @@ export const Navbar = () => {
                 transition={"all 0.2s ease-in-out"}
                 bgColor={
                     isOpen == true
-                        ? bgColorNav
+                        ? "gray.800"
                         : path == "/" && scrollTop == 0
                         ? "transparent"
-                        : bgColorNav
+                        : "gray.800"
                 }
             >
                 {/* logo brand */}
@@ -80,7 +61,7 @@ export const Navbar = () => {
                     w={"200px"}
                     justify={"flex-start"}
                     p={25}
-                    pt={27}
+                    pt={30}
                     pl={{ base: 10, sm: 20, md: 10, lg: 75 }}
                 >
                     {/* TODO: check if user is logged in or nah */}
@@ -88,11 +69,7 @@ export const Navbar = () => {
                         as={motion.div}
                         fontSize={"4xl"}
                         fontFamily={"Lato"}
-                        textColor={
-                            path == "/" && scrollTop == 0
-                                ? "white"
-                                : logoColorNav
-                        }
+                        textColor={"white"}
                         fontWeight={900}
                         onClick={() => window.location.reload}
                     >
@@ -104,7 +81,7 @@ export const Navbar = () => {
                     justify={"flex-end"}
                     pos={"relative"}
                     w={"full"}
-                    p={25}
+                    p={30}
                     pr={50}
                 >
                     {/* pc/laptop and tablets view */}
@@ -136,23 +113,6 @@ export const Navbar = () => {
                                 name="Account Panel"
                             />
                         )}
-
-                        <Button
-                            cursor={"pointer"}
-                            as={motion.div}
-                            bgColor={"none"}
-                            onClick={toggleColorAndMode}
-                            variant={"ghost"}
-                            textColor={logoColorNav}
-                            whileHover={{
-                                backgroundColor: "none",
-                                scale: 1.3,
-                            }}
-                            _active={{ bgColor: "none" }}
-                            _hover={{ bgColor: "none" }}
-                        >
-                            <DarkModeSwitch checked={theMode} />
-                        </Button>
                     </HStack>
                 </Flex>
 

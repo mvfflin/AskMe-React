@@ -8,6 +8,14 @@ body {
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-image: linear-gradient(
+        to bottom right,
+        rgb(0, 0, 153),
+        rgb(255, 204, 255)
+    );
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 body::-webkit-scrollbar {
