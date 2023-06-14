@@ -14,7 +14,7 @@ function App() {
     return (
         <AuthProvider>
             <HelmetProvider>
-                <AuthProvider authType="cookie" authName="_auth">
+                <AuthProvider authType="localstorage" authName="_auth">
                     <ChakraProvider>
                         <Navbar />
                         <Box

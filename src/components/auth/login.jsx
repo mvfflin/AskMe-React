@@ -16,7 +16,6 @@ import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
 
 export const LoginPanel = () => {
     const signIn = useSignIn();
@@ -62,14 +61,13 @@ export const LoginPanel = () => {
                 "success"
             );
             console.log(data);
+            const token = data.token;
             signIn({
-                token: data.token,
+                token: token,
                 tokenType: "Bearer",
                 expiresIn: 30,
                 authState: {
-                    id: data.id,
-                    username: data.username,
-                    email: data.email,
+                    token: token,
                 },
             });
             return navigate("/account/admin");
@@ -100,7 +98,7 @@ export const LoginPanel = () => {
     return (
         <Flex>
             <Box w={"full"} h={"full"} textColor={"white"} mt={"60px"}>
-                <Heading my={7}>Log-in to your existing account.</Heading>
+                <Heading my={5}>Log-in to your existing account.</Heading>
 
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl isInvalid={formik.errors.email}>

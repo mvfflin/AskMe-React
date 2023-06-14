@@ -47,12 +47,13 @@ export const Navbar = () => {
                 w={"full"}
                 h={"110px"}
                 transition={"all 0.2s ease-in-out"}
+                backdropFilter={"blur(12px)"}
                 bgColor={
                     isOpen == true
-                        ? "gray.800"
+                        ? "blackAlpha.500"
                         : path == "/" && scrollTop == 0
                         ? "transparent"
-                        : "gray.800"
+                        : "blackAlpha.500"
                 }
             >
                 {/* logo brand */}

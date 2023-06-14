@@ -12,12 +12,15 @@ import { useAuthUser, useIsAuthenticated } from "react-auth-kit";
 import { BiRightArrow, BiRightArrowAlt } from "react-icons/bi";
 import { TypeAnimation } from "react-type-animation";
 import { setToast } from "../../utils/toast";
+import { decodeToken } from "react-jwt";
 
 export const HomeWelcome = () => {
     // to check if user is authenticated
     const isAuthed = useIsAuthenticated();
     // auth user id, email, dll
     const authUser = useAuthUser();
+    const userData = decodeToken(authUser()?.token);
+    console.log(userData);
     const { makeToast } = setToast();
 
     return (
@@ -85,7 +88,7 @@ export const HomeWelcome = () => {
                     ) : (
                         <VStack>
                             <Heading fontSize={100} color={"white"} mx={40}>
-                                Hello again, {authUser?.username}
+                                Hello again, {userData?.username}
                             </Heading>
                             <Link>
                                 <Button

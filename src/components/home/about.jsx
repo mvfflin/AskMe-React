@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import "@fontsource/lato";
 
 export const HomeAbout = () => {
@@ -7,18 +7,19 @@ export const HomeAbout = () => {
             <Flex
                 justify={"center"}
                 mt={225}
-                bgColor={"rgba(255,255,255,0.5)"}
+                bgColor={"rgba(255,255,255,0.2)"}
                 h={"5xl"}
+                backdropFilter={"blur(12px)"}
             >
-                <Text
+                <VStack
                     textAlign={"center"}
-                    fontSize={"5xl"}
                     mx={50}
-                    fontFamily={"Lato"}
-                    fontWeight={900}
                     mt={250}
+                    textColor={"black"}
                 >
-                    About AskMe.
+                    <Text fontSize={"5xl"} fontFamily={"Lato"} fontWeight={900}>
+                        About AskMe.
+                    </Text>
                     <Text fontSize={"2xl"} fontWeight={400}>
                         Lorem, ipsum dolor sit amet consectetur adipisicing
                         elit. Obcaecati dolorum voluptate dicta, cupiditate
@@ -39,7 +40,7 @@ export const HomeAbout = () => {
                         cupiditate cumque, labore molestiae, illo inventore
                         voluptatibus ad?
                     </Text>
-                </Text>
+                </VStack>
             </Flex>
         </Box>
     );

@@ -63,7 +63,7 @@ export const RegisterPanel = () => {
     return (
         <Flex>
             <Box w={"full"} h={"full"} textColor={"white"}>
-                <Heading mt={2} mb={7} textColor={"white"}>
+                <Heading mt={10} mb={7} textColor={"white"}>
                     Register new account
                 </Heading>
 
