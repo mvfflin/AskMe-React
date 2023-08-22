@@ -1,3 +1,3 @@
 # AskMe-React
 
-Front end for @WillisRH's project AskMe.
+Front end for [@WillisRH](https://github.com/WillisRH)'s project AskMe.
