@@ -6,6 +6,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Navbar } from "./components/layouts/navbar";
 import { NotFound } from "./pages/notfound";
 import { Login } from "./pages/login";
+import { Register } from "./pages/register";
+import { AccountPanel } from "./pages/accpanel";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -18,6 +20,8 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/admin/account" element={<AccountPanel />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>

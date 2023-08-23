@@ -22,7 +22,7 @@ import * as yup from "yup";
 import api from "../utils/axios";
 import { setToast } from "../utils/toast";
 
-export const Login = () => {
+export const Register = () => {
 	const isAuthed = useIsAuthenticated();
 	const navigate = useNavigate();
 	const { makeToast } = setToast();
@@ -34,6 +34,10 @@ export const Login = () => {
 			.required("Required")
 			.min(3, "Username have minimum of 3 chars")
 			.max(20, "Username have maximum of 20 chars"),
+		email: yup
+			.string()
+			.required("Required")
+			.email("Please enter a valid email"),
 		password: yup
 			.string()
 			.required("Required")
@@ -43,28 +47,30 @@ export const Login = () => {
 	const formik = useFormik({
 		initialValues: {
 			username: "",
+			email: "",
 			password: "",
 		},
 		validateOnBlur: true,
 		validationSchema: validSchema,
 	});
 
-	const loginSubmit = async () => {
-		const res = await api.post("/login", {
+	const registerSubmit = async () => {
+		const res = await api.post("/register", {
 			username: formik.values.username,
+			email: formik.values.email,
 			password: formik.values.password,
 		});
 		const data = res.data;
 		const status = res.status;
 		if (status == 201) {
-			makeToast("Failed to login!", "Incomplete credentials.", "error");
+			makeToast("Failed to login!", "Username already used.", "error");
 		} else if (status == 202) {
-			makeToast("Failed to login!", "User not found.", "error");
+			makeToast("Failed to login!", "Email already used.", "error");
 		} else if (status == 203) {
-			makeToast("Failed to login!", "Password does not match.", "error");
+			makeToast("Failed to login!", "Incomplete credentials.", "error");
 		} else if (status == 200) {
 			makeToast(
-				"Success to login!",
+				"Success to register!",
 				"Redirecting to account panel...",
 				"success"
 			);
@@ -102,7 +108,7 @@ export const Login = () => {
 					<Box w={"auto"} h={"auto"} bgColor={"gray.700"} rounded={10} p={10}>
 						<Container textAlign={"center"}>
 							<Heading color={"white"} textAlign={"left"} py={5}>
-								Login to existing account
+								Register to create a new account
 							</Heading>
 							<Divider mb={7} />
 							<form>
@@ -120,13 +126,27 @@ export const Login = () => {
 										{formik.errors.username}
 									</FormErrorMessage>
 								</FormControl>
+								<FormControl mt={7} isInvalid={formik.errors.email}>
+									<FormLabel textColor={"white"}>Email</FormLabel>
+									<Input
+										bgColor={"white"}
+										name="email"
+										placeholder="Insert your email..."
+										value={formik.values.email}
+										onChange={formik.handleChange}
+									/>
+									<FormErrorMessage>
+										<FormErrorIcon />
+										{formik.errors.email}
+									</FormErrorMessage>
+								</FormControl>
 								<FormControl isInvalid={formik.errors.password} mt={7}>
 									<FormLabel textColor={"white"}>Password</FormLabel>
 									<Input
 										bgColor={"white"}
 										name="password"
-										placeholder="Insert your password..."
 										type="password"
+										placeholder="Insert your password..."
 										value={formik.values.password}
 										onChange={formik.handleChange}
 									/>
@@ -135,13 +155,13 @@ export const Login = () => {
 										{formik.errors.password}
 									</FormErrorMessage>
 								</FormControl>
-								<Button type="button" onClick={loginSubmit} mt={"20px"}>
+								<Button type="button" onClick={registerSubmit} mt={"20px"}>
 									Submit
 								</Button>
 								<Text mt={5} textColor={"white"}>
-									Not registered?{" "}
-									<Link textColor={"blue.100"} href="/register">
-										Register
+									Already have an account?{" "}
+									<Link textColor={"blue.100"} href="/login">
+										Login
 									</Link>{" "}
 								</Text>
 							</form>
