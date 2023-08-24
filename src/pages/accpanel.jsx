@@ -154,7 +154,7 @@ export const AccountPanel = () => {
 									</Tbody>
 								</Table>
 							</Box>
-							<Text textColor={"white"}>
+							<Text textColor={"white"} mt={5}>
 								Create new session!{" "}
 								<Link href={`/admin/account/create-session`} color={"blue.100"}>
 									New session
