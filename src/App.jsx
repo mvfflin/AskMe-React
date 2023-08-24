@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { AccountPanel } from "./pages/accpanel";
 import { CreateSession } from "./pages/create-session";
+import { AdminSession } from "./pages/adminsession";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -26,6 +27,10 @@ function App() {
 						<Route
 							path="/admin/account/create-session"
 							element={<CreateSession />}
+						/>
+						<Route
+							path="/admin/account/session/:sessionid"
+							element={<AdminSession />}
 						/>
 						<Route path="*" element={<NotFound />} />
 					</Routes>

@@ -28,6 +28,7 @@ import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
 import { BiSolidStar } from "react-icons/bi";
 import "@fontsource/poppins";
+import { AdminSession } from "./adminsession";
 
 export const AccountPanel = () => {
 	const isAuthed = useIsAuthenticated();
@@ -68,6 +69,17 @@ export const AccountPanel = () => {
 			getUserData();
 		}
 	}, []);
+
+	const deleteSession = async (id) => {
+		const res = await api.delete(`/session/${id}`);
+		const status = res.status;
+		if (status == 201) {
+			makeToast("Error", "Session not found, try refreshing the page", "error");
+		} else {
+			window.location.reload();
+			makeToast("Success", "Session successfully deleted.", "success");
+		}
+	};
 
 	return (
 		<>
@@ -140,10 +152,18 @@ export const AccountPanel = () => {
 													<Td>{session.question}</Td>
 													<Td>
 														<VStack>
-															<Button colorScheme="green" size={"sm"}>
-																Open
-															</Button>
-															<Button colorScheme="red" size={"sm"}>
+															<Link href={`account/session/${session.id}`}>
+																<Button colorScheme="green" size={"sm"}>
+																	Open
+																</Button>
+															</Link>
+															<Button
+																onClick={() => {
+																	deleteSession(session.id);
+																}}
+																colorScheme="red"
+																size={"sm"}
+															>
 																Delete
 															</Button>
 														</VStack>
