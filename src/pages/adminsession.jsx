@@ -9,6 +9,7 @@ import {
 	Container,
 	Flex,
 	Heading,
+	Link,
 	Table,
 	Tag,
 	Tbody,
@@ -23,6 +24,7 @@ import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
 import askmcjpg from "../assets/askmc.jpg";
 import { BiLink, BiShare } from "react-icons/bi";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 export const AdminSession = () => {
 	const { sessionid } = useParams();
@@ -46,7 +48,7 @@ export const AdminSession = () => {
 				const res = await api.get(`/session/${sessionid}`);
 				const data = await res.data;
 				const status = res.status;
-				if (res.status == 202) {
+				if (status == 202) {
 					makeToast(
 						"Error",
 						`Session with that id not found in your account`,
@@ -71,6 +73,13 @@ export const AdminSession = () => {
 		}
 	}, []);
 
+	const url = window.location.href;
+	const newUrl = url.replace("/admin/account/", "/");
+
+	const onCopy = () => {
+		makeToast("Success", "Link copied to clipboard!", "success");
+	};
+
 	return (
 		<Flex
 			pt={250}
@@ -92,12 +101,16 @@ export const AdminSession = () => {
 						</Tag>
 						<br />
 						<ButtonGroup spacing={6}>
-							<Button leftIcon={<BiShare />} colorScheme="facebook">
-								Share
-							</Button>
-							<Button leftIcon={<BiLink />} colorScheme="green">
-								Preview
-							</Button>
+							<CopyToClipboard text={newUrl} onCopy={onCopy}>
+								<Button leftIcon={<BiShare />} colorScheme="facebook">
+									Share
+								</Button>
+							</CopyToClipboard>
+							<Link href={`/session/${sessionData.id}`}>
+								<Button leftIcon={<BiLink />} colorScheme="green">
+									Preview
+								</Button>
+							</Link>
 						</ButtonGroup>
 						<Text textColor={"white"} my={5} fontSize={"lg"}>
 							Answers

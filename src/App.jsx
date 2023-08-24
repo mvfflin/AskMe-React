@@ -10,6 +10,7 @@ import { Register } from "./pages/register";
 import { AccountPanel } from "./pages/accpanel";
 import { CreateSession } from "./pages/create-session";
 import { AdminSession } from "./pages/adminsession";
+import { SubmitAnswer } from "./pages/submit-answer";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -32,6 +33,7 @@ function App() {
 							path="/admin/account/session/:sessionid"
 							element={<AdminSession />}
 						/>
+						<Route path="/session/:session" element={<SubmitAnswer />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>
