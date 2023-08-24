@@ -8,6 +8,7 @@ import { NotFound } from "./pages/notfound";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { AccountPanel } from "./pages/accpanel";
+import { CreateSession } from "./pages/create-session";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -22,6 +23,10 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/register" element={<Register />} />
 						<Route path="/admin/account" element={<AccountPanel />} />
+						<Route
+							path="/admin/account/create-session"
+							element={<CreateSession />}
+						/>
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>

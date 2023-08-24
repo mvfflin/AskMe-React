@@ -35,7 +35,9 @@ export const Navbar = () => {
 			<Flex justify={"flex-end"} mr={10}>
 				<HStack>
 					<ButtonGroup spacing={10} justifyItems={"space-between"}>
-						<Button leftIcon={<BiHome />}>Home</Button>
+						<Link href="/">
+							<Button leftIcon={<BiHome />}>Home</Button>
+						</Link>
 						{!isAuthed() ? (
 							<Menu>
 								<MenuButton as={Button} leftIcon={<BiUser />}>

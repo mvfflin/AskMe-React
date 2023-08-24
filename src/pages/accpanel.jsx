@@ -1,11 +1,23 @@
 import {
 	Avatar,
 	Box,
+	Button,
 	Container,
 	Flex,
+	HStack,
+	Link,
+	Table,
+	TableCaption,
+	TableContainer,
 	Tag,
+	Tbody,
+	Td,
 	Text,
+	Th,
+	Thead,
 	Tooltip,
+	Tr,
+	VStack,
 } from "@chakra-ui/react";
 import askmcjpg from "../assets/askmc.jpg";
 import { useAuthUser, useIsAuthenticated, useSignOut } from "react-auth-kit";
@@ -15,6 +27,7 @@ import { setToast } from "../utils/toast";
 import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
 import { BiSolidStar } from "react-icons/bi";
+import "@fontsource/poppins";
 
 export const AccountPanel = () => {
 	const isAuthed = useIsAuthenticated();
@@ -24,6 +37,7 @@ export const AccountPanel = () => {
 	const { makeToast } = setToast();
 	const [decoded, setDecoded] = useState({});
 	const [userData, setUserData] = useState({});
+	const [userSessions, setUserSessions] = useState([]);
 
 	useEffect(() => {
 		if (!isAuthed()) {
@@ -42,6 +56,15 @@ export const AccountPanel = () => {
 					signOut();
 				}
 			};
+
+			const getUserSessions = async () => {
+				const res = await api.get(`/user-sessions/${decodedjwt.id}`);
+				const data = await res.data;
+				setUserSessions(data);
+				console.log(data);
+			};
+
+			getUserSessions();
 			getUserData();
 		}
 	}, []);
@@ -67,15 +90,17 @@ export const AccountPanel = () => {
 								{decoded?.username}
 							</Text>
 							{userData?.special == true ? (
-								<Tooltip label="Adios">
+								<Tooltip label="You are a special user.">
 									<Tag
 										mt={5}
 										size={"lg"}
 										variant={"solid"}
 										colorScheme="green"
 										cursor={"pointer"}
+										fontFamily={"Poppins"}
 									>
-										<BiSolidStar /> Special User
+										<BiSolidStar />
+										&nbsp;Special User
 									</Tag>
 								</Tooltip>
 							) : (
@@ -88,6 +113,53 @@ export const AccountPanel = () => {
 									No Badges
 								</Text>
 							)}
+							<Text mt={5} textColor={"white"} fontFamily={"Poppins"}>
+								Your sessions
+							</Text>
+							<Box overflowY={"auto"} maxHeight={"280px"} mt={5} zIndex={1}>
+								<Table variant={"unstyled"} textAlign={"center"}>
+									<Thead
+										position={"sticky"}
+										top={0}
+										bgColor={"grey"}
+										zIndex={20}
+									>
+										<Tr>
+											<Th w={"100px"} textColor={"white"}>
+												ID
+											</Th>
+											<Th textColor={"white"}>Question</Th>
+											<Th textColor={"white"}>Actions</Th>
+										</Tr>
+									</Thead>
+									<Tbody wordBreak={"break-word"} textColor={"white"}>
+										{userSessions?.map((session, index) => {
+											return (
+												<Tr key={index}>
+													<Td>{session.id}</Td>
+													<Td>{session.question}</Td>
+													<Td>
+														<VStack>
+															<Button colorScheme="green" size={"sm"}>
+																Open
+															</Button>
+															<Button colorScheme="red" size={"sm"}>
+																Delete
+															</Button>
+														</VStack>
+													</Td>
+												</Tr>
+											);
+										})}
+									</Tbody>
+								</Table>
+							</Box>
+							<Text textColor={"white"}>
+								Create new session!{" "}
+								<Link href={`/admin/account/create-session`} color={"blue.100"}>
+									New session
+								</Link>
+							</Text>
 						</Container>
 					</Box>
 				</Container>
