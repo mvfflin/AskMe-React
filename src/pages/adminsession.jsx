@@ -47,9 +47,21 @@ export const AdminSession = () => {
 				const data = await res.data;
 				const status = res.status;
 				if (res.status == 202) {
-					makeToast("Error", `Please enter a valid session id!`, "error");
+					makeToast(
+						"Error",
+						`Session with that id not found in your account`,
+						"error"
+					);
 					navigate("/admin/account");
 				} else {
+					if (data.creator != decodedjwt.id) {
+						navigate("/admin/account");
+						makeToast(
+							"Error",
+							"Session with that id not found in your account",
+							"error"
+						);
+					}
 					setSessionData(data);
 					setAnswers(data.answers);
 					console.log(data.answers);
@@ -93,7 +105,7 @@ export const AdminSession = () => {
 						<Box overflowY={"auto"} maxHeight={"280px"} mt={5} zIndex={1}>
 							<Table variant={"unstyled"} textAlign={"center"}>
 								<Thead position={"sticky"} top={0} bgColor={"grey"} zIndex={20}>
-									<Tr>
+									<Tr textColor={"white"}>
 										<Th>ID</Th>
 										<Th>Answers</Th>
 										<Th>Actions</Th>
