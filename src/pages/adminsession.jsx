@@ -80,6 +80,17 @@ export const AdminSession = () => {
 		makeToast("Success", "Link copied to clipboard!", "success");
 	};
 
+	const deleteAnswer = async (answeridd) => {
+		const res = await api.patch("/delete-answer", {
+			sessionid: sessionData.id,
+			answerid: answeridd,
+		});
+		if (res.status == 200) {
+			window.location = window.location;
+			makeToast("Success", "Answer deleted", "success");
+		}
+	};
+
 	return (
 		<Flex
 			pt={250}
@@ -132,12 +143,20 @@ export const AdminSession = () => {
 												<Td textColor={"white"}>{answer.answer}</Td>
 												<Td>
 													<VStack>
-														<Link href={`view/${answer.id}`}>
+														<Link
+															href={`/admin/account/session/${sessionData.id}/view/${answer.id}`}
+														>
 															<Button size={"sm"} colorScheme="green">
 																Open
 															</Button>
 														</Link>
-														<Button size={"sm"} colorScheme="red">
+														<Button
+															onClick={() => {
+																deleteAnswer(answer.id);
+															}}
+															size={"sm"}
+															colorScheme="red"
+														>
 															Delete
 														</Button>
 													</VStack>
