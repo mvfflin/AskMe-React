@@ -27,9 +27,11 @@ export const Navbar = () => {
 			zIndex={100}
 		>
 			<Flex p={3} pl={20} justify={"flex-start"} w={"full"}>
-				<Text fontSize={"4xl"} fontWeight={"semibold"} color={"white"}>
-					AskMe
-				</Text>
+				<Link href="/">
+					<Text fontSize={"4xl"} fontWeight={"semibold"} color={"white"}>
+						AskMe
+					</Text>
+				</Link>
 			</Flex>
 
 			<Flex justify={"flex-end"} mr={10}>
