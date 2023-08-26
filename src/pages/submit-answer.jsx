@@ -53,14 +53,6 @@ export const SubmitAnswer = () => {
 		answer: yup.string().required("Required"),
 	});
 
-	const formik = useFormik({
-		initialValues: {
-			answer: "",
-		},
-		validateOnBlur: true,
-		validationSchema: validSchema,
-	});
-
 	const answerSubmit = async () => {
 		const res = await api.patch(`/new-answer`, {
 			sessionid: sessionData.id,
@@ -78,6 +70,15 @@ export const SubmitAnswer = () => {
 			navigate("/");
 		}
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			answer: "",
+		},
+		validateOnBlur: true,
+		validationSchema: validSchema,
+		onSubmit: answerSubmit,
+	});
 
 	return (
 		<Flex
@@ -100,7 +101,7 @@ export const SubmitAnswer = () => {
 						<Tag size={"lg"} my={5}>
 							{sessionData.question}
 						</Tag>
-						<form>
+						<form onSubmit={formik.handleSubmit}>
 							<FormControl isInvalid={formik.errors.answer}>
 								<FormLabel color="white">Your answer</FormLabel>
 								<Input
@@ -116,12 +117,7 @@ export const SubmitAnswer = () => {
 									{formik.errors.answer}
 								</FormErrorMessage>
 							</FormControl>
-							<Button
-								mt={7}
-								type="button"
-								colorScheme="green"
-								onClick={answerSubmit}
-							>
+							<Button mt={7} type="submit" colorScheme="green">
 								Submit your answer
 							</Button>
 						</form>

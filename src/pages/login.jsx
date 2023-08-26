@@ -40,15 +40,6 @@ export const Login = () => {
 			.min(8, "Password have minimum of 8 chars"),
 	});
 
-	const formik = useFormik({
-		initialValues: {
-			username: "",
-			password: "",
-		},
-		validateOnBlur: true,
-		validationSchema: validSchema,
-	});
-
 	const loginSubmit = async () => {
 		const res = await api.post("/login", {
 			username: formik.values.username,
@@ -80,6 +71,16 @@ export const Login = () => {
 		}
 	};
 
+	const formik = useFormik({
+		initialValues: {
+			username: "",
+			password: "",
+		},
+		validateOnBlur: true,
+		validationSchema: validSchema,
+		onSubmit: loginSubmit,
+	});
+
 	useEffect(() => {
 		if (isAuthed()) {
 			navigate("/admin/account");
@@ -105,7 +106,7 @@ export const Login = () => {
 								Login to existing account
 							</Heading>
 							<Divider mb={7} />
-							<form>
+							<form onSubmit={formik.handleSubmit}>
 								<FormControl isInvalid={formik.errors.username}>
 									<FormLabel textColor={"white"}>Username</FormLabel>
 									<Input
@@ -135,7 +136,7 @@ export const Login = () => {
 										{formik.errors.password}
 									</FormErrorMessage>
 								</FormControl>
-								<Button type="button" onClick={loginSubmit} mt={"20px"}>
+								<Button type="submit" mt={"20px"}>
 									Submit
 								</Button>
 								<Text mt={5} textColor={"white"}>

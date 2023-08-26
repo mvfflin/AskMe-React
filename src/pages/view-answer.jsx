@@ -25,8 +25,8 @@ import {
 	BiBullseye,
 	BiExitFullscreen,
 	BiFullscreen,
-	BiSolidEyedropper,
 } from "react-icons/bi";
+import { FiEye } from "react-icons/fi";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useRef } from "react";
 
@@ -174,7 +174,7 @@ export const ViewAnswer = () => {
 							/>
 							<IconButton
 								size={"lg"}
-								icon={<BiBullseye />}
+								icon={<FiEye />}
 								onClick={() => {
 									setHide((hide) => !hide);
 								}}

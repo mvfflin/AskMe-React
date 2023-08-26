@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { setToast } from "../utils/toast";
 import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
-import { BiSolidStar } from "react-icons/bi";
+import { BiLogOut, BiSolidStar } from "react-icons/bi";
 import "@fontsource/poppins";
 import { AdminSession } from "./adminsession";
 
@@ -180,6 +180,19 @@ export const AccountPanel = () => {
 									New session
 								</Link>
 							</Text>
+							<Text mt={5} color={"white"}>
+								Want to log out?
+							</Text>
+							<Button
+								onClick={() => {
+									signOut();
+									navigate("/");
+									makeToast("Success", "Successfully logged out!", "success");
+								}}
+								leftIcon={<BiLogOut />}
+							>
+								Log out
+							</Button>
 						</Container>
 					</Box>
 				</Container>

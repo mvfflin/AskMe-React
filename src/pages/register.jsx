@@ -37,21 +37,11 @@ export const Register = () => {
 		email: yup
 			.string()
 			.required("Required")
-			.email("Please enter a valid email"),
+			.email("Please enter a valid email address"),
 		password: yup
 			.string()
 			.required("Required")
 			.min(8, "Password have minimum of 8 chars"),
-	});
-
-	const formik = useFormik({
-		initialValues: {
-			username: "",
-			email: "",
-			password: "",
-		},
-		validateOnBlur: true,
-		validationSchema: validSchema,
 	});
 
 	const registerSubmit = async () => {
@@ -86,6 +76,17 @@ export const Register = () => {
 		}
 	};
 
+	const formik = useFormik({
+		initialValues: {
+			username: "",
+			email: "",
+			password: "",
+		},
+		validateOnBlur: true,
+		validationSchema: validSchema,
+		onSubmit: registerSubmit,
+	});
+
 	useEffect(() => {
 		if (isAuthed()) {
 			navigate("/admin/account");
@@ -111,7 +112,7 @@ export const Register = () => {
 								Register to create a new account
 							</Heading>
 							<Divider mb={7} />
-							<form>
+							<form onSubmit={formik.handleSubmit}>
 								<FormControl isInvalid={formik.errors.username}>
 									<FormLabel textColor={"white"}>Username</FormLabel>
 									<Input
@@ -155,7 +156,7 @@ export const Register = () => {
 										{formik.errors.password}
 									</FormErrorMessage>
 								</FormControl>
-								<Button type="button" onClick={registerSubmit} mt={"20px"}>
+								<Button type="submit" mt={"20px"}>
 									Submit
 								</Button>
 								<Text mt={5} textColor={"white"}>
