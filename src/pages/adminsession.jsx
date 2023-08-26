@@ -132,9 +132,11 @@ export const AdminSession = () => {
 												<Td textColor={"white"}>{answer.answer}</Td>
 												<Td>
 													<VStack>
-														<Button size={"sm"} colorScheme="green">
-															Open
-														</Button>
+														<Link href={`view/${answer.id}`}>
+															<Button size={"sm"} colorScheme="green">
+																Open
+															</Button>
+														</Link>
 														<Button size={"sm"} colorScheme="red">
 															Delete
 														</Button>
