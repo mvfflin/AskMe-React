@@ -23,7 +23,7 @@ import {
 import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
 import askmcjpg from "../assets/askmc.jpg";
-import { BiLink, BiShare } from "react-icons/bi";
+import { BiLink, BiRefresh, BiShare } from "react-icons/bi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 export const AdminSession = () => {
@@ -123,6 +123,15 @@ export const AdminSession = () => {
 								</Button>
 							</Link>
 						</ButtonGroup>
+						<br />
+						<Button
+							mt={5}
+							colorScheme="blackAlpha"
+							onClick={() => (window.location = window.location)}
+							leftIcon={<BiRefresh />}
+						>
+							Refresh
+						</Button>
 						<Text textColor={"white"} my={5} fontSize={"lg"}>
 							Answers
 						</Text>
