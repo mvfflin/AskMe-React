@@ -23,7 +23,7 @@ import {
 import jwt_decode from "jwt-decode";
 import api from "../utils/axios";
 import askmcjpg from "../assets/askmc.jpg";
-import { BiLink, BiRefresh, BiShare } from "react-icons/bi";
+import { BiArrowBack, BiLink, BiRefresh, BiShare } from "react-icons/bi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 export const AdminSession = () => {
@@ -93,10 +93,10 @@ export const AdminSession = () => {
 
 	return (
 		<Flex
-			pt={250}
+			py={250}
 			id="welcome"
 			w={"full"}
-			h={"100vh"}
+			h={"auto"}
 			bgImage={`linear-gradient(to top, black, #646464), url(${askmcjpg})`}
 			bgPos={"center"}
 			bgRepeat={"no-repeat"}
@@ -176,6 +176,11 @@ export const AdminSession = () => {
 								</Tbody>
 							</Table>
 						</Box>
+						<Link href="/admin/account">
+							<Button mt={5} leftIcon={<BiArrowBack />}>
+								Back to Account panel
+							</Button>
+						</Link>
 					</Container>
 				</Box>
 			</Container>

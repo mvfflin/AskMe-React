@@ -90,9 +90,9 @@ export const Login = () => {
 	return (
 		<>
 			<Flex
-				pt={250}
+				py={250}
 				w={"full"}
-				h={"100vh"}
+				h={"auto"}
 				bgImage={`linear-gradient(to top, black, #646464), url(${askmcjpg})`}
 				bgPos={"center"}
 				bgRepeat={"no-repeat"}

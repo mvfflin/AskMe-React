@@ -72,7 +72,7 @@ export const CreateSession = () => {
 
 	return (
 		<Flex
-			pt={250}
+			py={250}
 			id="welcome"
 			w={"full"}
 			h={"100vh"}
