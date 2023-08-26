@@ -55,18 +55,32 @@ export const CreateSession = () => {
 	});
 
 	const createSession = async () => {
-		const res = await api.post("/session", {
-			question: formik.values.question,
-			creator: decoded.id,
-		});
-		const status = res.status;
-		if (status == 201) {
-			makeToast("Error", "User id or question not defined", "error");
-		} else if (status == 202) {
-			makeToast("Error", "Creator id not found", "error");
-		} else if (status == 200) {
-			makeToast("Session Created!", "Session created successfully.", "success");
-			navigate("/admin/account");
+		try {
+			const res = await api.post("/session", {
+				question: formik.values.question,
+				creator: decoded.id,
+			});
+			const status = res.status;
+			if (status == 201) {
+				makeToast("Error", "User id or question not defined", "error");
+			} else if (status == 202) {
+				makeToast("Error", "Creator id not found", "error");
+			} else if (status == 200) {
+				makeToast(
+					"Session Created!",
+					"Session created successfully.",
+					"success"
+				);
+				navigate("/admin/account");
+			}
+		} catch (err) {
+			makeToast(
+				"Error!",
+				"Something wrong with the server, please contact admin",
+				"error"
+			);
+			navigate("/");
+			// console.log(err)
 		}
 	};
 

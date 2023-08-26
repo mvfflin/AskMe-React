@@ -49,20 +49,40 @@ export const AccountPanel = () => {
 			const decodedjwt = jwt_decode(token);
 			setDecoded(decodedjwt);
 			const getUserData = async () => {
-				const res = await api.get(`/user/${decodedjwt.id}`);
-				const data = await res.data;
-				setUserData(data);
-				console.log(data);
-				if (data.err == "User not found") {
-					signOut();
+				try {
+					const res = await api.get(`/user/${decodedjwt.id}`);
+					const data = await res.data;
+					setUserData(data);
+					console.log(data);
+					if (data.err == "User not found") {
+						signOut();
+					}
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					navigate("/");
+					// console.log(err)
 				}
 			};
 
 			const getUserSessions = async () => {
-				const res = await api.get(`/user-sessions/${decodedjwt.id}`);
-				const data = await res.data;
-				setUserSessions(data);
-				console.log(data);
+				try {
+					const res = await api.get(`/user-sessions/${decodedjwt.id}`);
+					const data = await res.data;
+					setUserSessions(data);
+					console.log(data);
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					navigate("/");
+					// console.log(err)
+				}
 			};
 
 			getUserSessions();
@@ -71,13 +91,27 @@ export const AccountPanel = () => {
 	}, []);
 
 	const deleteSession = async (id) => {
-		const res = await api.delete(`/session/${id}`);
-		const status = res.status;
-		if (status == 201) {
-			makeToast("Error", "Session not found, try refreshing the page", "error");
-		} else {
-			window.location.reload();
-			makeToast("Success", "Session successfully deleted.", "success");
+		try {
+			const res = await api.delete(`/session/${id}`);
+			const status = res.status;
+			if (status == 201) {
+				makeToast(
+					"Error",
+					"Session not found, try refreshing the page",
+					"error"
+				);
+			} else {
+				window.location.reload();
+				makeToast("Success", "Session successfully deleted.", "success");
+			}
+		} catch (err) {
+			makeToast(
+				"Error!",
+				"Something wrong with the server, please contact admin",
+				"error"
+			);
+			navigate("/");
+			// console.log(err)
 		}
 	};
 

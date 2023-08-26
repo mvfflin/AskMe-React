@@ -45,28 +45,38 @@ export const AdminSession = () => {
 			const decodedjwt = jwt_decode(token);
 			setDecoded(decodedjwt);
 			const getSessionInfo = async () => {
-				const res = await api.get(`/session/${sessionid}`);
-				const data = await res.data;
-				const status = res.status;
-				if (status == 202) {
-					makeToast(
-						"Error",
-						`Session with that id not found in your account`,
-						"error"
-					);
-					navigate("/admin/account");
-				} else {
-					if (data.creator != decodedjwt.id) {
-						navigate("/admin/account");
+				try {
+					const res = await api.get(`/session/${sessionid}`);
+					const data = await res.data;
+					const status = res.status;
+					if (status == 202) {
 						makeToast(
 							"Error",
-							"Session with that id not found in your account",
+							`Session with that id not found in your account`,
 							"error"
 						);
+						navigate("/admin/account");
+					} else {
+						if (data.creator != decodedjwt.id) {
+							navigate("/admin/account");
+							makeToast(
+								"Error",
+								"Session with that id not found in your account",
+								"error"
+							);
+						}
+						setSessionData(data);
+						setAnswers(data.answers);
+						console.log(data.answers);
 					}
-					setSessionData(data);
-					setAnswers(data.answers);
-					console.log(data.answers);
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					navigate("/");
+					// console.log(err)
 				}
 			};
 			getSessionInfo();
@@ -81,13 +91,23 @@ export const AdminSession = () => {
 	};
 
 	const deleteAnswer = async (answeridd) => {
-		const res = await api.patch("/delete-answer", {
-			sessionid: sessionData.id,
-			answerid: answeridd,
-		});
-		if (res.status == 200) {
-			window.location = window.location;
-			makeToast("Success", "Answer deleted", "success");
+		try {
+			const res = await api.patch("/delete-answer", {
+				sessionid: sessionData.id,
+				answerid: answeridd,
+			});
+			if (res.status == 200) {
+				window.location = window.location;
+				makeToast("Success", "Answer deleted", "success");
+			}
+		} catch (err) {
+			makeToast(
+				"Error!",
+				"Something wrong with the server, please contact admin",
+				"error"
+			);
+			navigate("/");
+			// console.log(err)
 		}
 	};
 

@@ -9,30 +9,55 @@ import {
 } from "@chakra-ui/react";
 import askmcjpg from "../assets/askmc.jpg";
 import { BiUser } from "react-icons/bi";
-import { useAuthUser, useIsAuthenticated } from "react-auth-kit";
+import { useAuthUser, useIsAuthenticated, useSignOut } from "react-auth-kit";
 import { useEffect, useState } from "react";
 import api from "../utils/axios";
 import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const isAuthed = useIsAuthenticated();
 	const authUser = useAuthUser();
+	const signOut = useSignOut();
 	const [decoded, setDecoded] = useState({});
 	const [totalSessions, setTotalSessions] = useState(0);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isAuthed()) {
 			const token = authUser().token;
 			const decodedjwt = jwt_decode(token);
 			const getUserData = async () => {
-				const res = await api.get(`/user/${decodedjwt.id}`);
-				const data = await res.data;
-				setDecoded(data);
+				try {
+					const res = await api.get(`/user/${decodedjwt.id}`);
+					const data = await res.data;
+					setDecoded(data);
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					signOut();
+					navigate("/");
+					// console.log(err)
+				}
 			};
 			const getUserSessions = async () => {
-				const res = await api.get(`/user-sessions/${decodedjwt.id}`);
-				const data = await res.data;
-				setTotalSessions(data.length);
+				try {
+					const res = await api.get(`/user-sessions/${decodedjwt.id}`);
+					const data = await res.data;
+					setTotalSessions(data.length);
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					signOut();
+					navigate("/");
+					// console.log(err)
+				}
 			};
 			getUserData();
 			getUserSessions();

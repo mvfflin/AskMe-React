@@ -64,30 +64,40 @@ export const ViewAnswer = () => {
 			const token = authUser().token;
 			const decodedjwt = jwt_decode(token);
 			const getSessionInfo = async () => {
-				const res = await api.get(`/session/${sessionid}`);
-				if (res.status == 202) {
-					makeToast("Error!", "Session not found", "error");
-					navigate("/admin/account");
-				} else {
-					const data = await res.data;
-					const findAnswer = data.answers.find(
-						(answer) => answer.id == answerid
-					);
-					if (data.creator != decodedjwt.id) {
-						navigate("/");
-						makeToast(
-							"Error!",
-							"Session with that id not found in your account",
-							"error"
-						);
-					}
-					if (findAnswer) {
-						setAnswerData(findAnswer);
-						setSessionData(data);
+				try {
+					const res = await api.get(`/session/${sessionid}`);
+					if (res.status == 202) {
+						makeToast("Error!", "Session not found", "error");
+						navigate("/admin/account");
 					} else {
-						navigate(`/admin/account/session/${data.id}`);
-						makeToast("Error!", "Answer not found", "error");
+						const data = await res.data;
+						const findAnswer = data.answers.find(
+							(answer) => answer.id == answerid
+						);
+						if (data.creator != decodedjwt.id) {
+							navigate("/");
+							makeToast(
+								"Error!",
+								"Session with that id not found in your account",
+								"error"
+							);
+						}
+						if (findAnswer) {
+							setAnswerData(findAnswer);
+							setSessionData(data);
+						} else {
+							navigate(`/admin/account/session/${data.id}`);
+							makeToast("Error!", "Answer not found", "error");
+						}
 					}
+				} catch (err) {
+					makeToast(
+						"Error!",
+						"Something wrong with the server, please contact admin",
+						"error"
+					);
+					navigate("/");
+					// console.log(err)
 				}
 			};
 			getSessionInfo();

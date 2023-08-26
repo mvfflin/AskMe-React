@@ -28,22 +28,32 @@ export const SubmitAnswer = () => {
 
 	useEffect(() => {
 		const getSessionData = async () => {
-			const res = await api.get(`/session/${session}`);
-			const status = res.status;
-			if (status == 202) {
-				makeToast("Error", "Session not found!", "error");
+			try {
+				const res = await api.get(`/session/${session}`);
+				const status = res.status;
+				if (status == 202) {
+					makeToast("Error", "Session not found!", "error");
+					navigate("/");
+				} else {
+					const data = await res.data;
+					setSessionData(data);
+					const getUserData = async () => {
+						const res1 = await api.get(`/user/${data.creator}`);
+						const data1 = await res1.data;
+						if (data.creator == data1.id) {
+							setCreator(data1);
+						}
+					};
+					getUserData();
+				}
+			} catch (err) {
+				makeToast(
+					"Error!",
+					"Something wrong with the server, please contact admin",
+					"error"
+				);
 				navigate("/");
-			} else {
-				const data = await res.data;
-				setSessionData(data);
-				const getUserData = async () => {
-					const res1 = await api.get(`/user/${data.creator}`);
-					const data1 = await res1.data;
-					if (data.creator == data1.id) {
-						setCreator(data1);
-					}
-				};
-				getUserData();
+				// console.log(err)
 			}
 		};
 		getSessionData();
@@ -54,20 +64,30 @@ export const SubmitAnswer = () => {
 	});
 
 	const answerSubmit = async () => {
-		const res = await api.patch(`/new-answer`, {
-			sessionid: sessionData.id,
-			answer: formik.values.answer,
-		});
-		if (res.status == 202) {
-			makeToast("Error", "Session not found", "error");
-			navigate("/");
-		} else {
+		try {
+			const res = await api.patch(`/new-answer`, {
+				sessionid: sessionData.id,
+				answer: formik.values.answer,
+			});
+			if (res.status == 202) {
+				makeToast("Error", "Session not found", "error");
+				navigate("/");
+			} else {
+				makeToast(
+					"Success",
+					"Answer uploaded! wait for them to react to it 😀",
+					"success"
+				);
+				navigate("/");
+			}
+		} catch (err) {
 			makeToast(
-				"Success",
-				"Answer uploaded! wait for them to react to it 😀",
-				"success"
+				"Error!",
+				"Something wrong with the server, please contact admin",
+				"error"
 			);
 			navigate("/");
+			// console.log(err)
 		}
 	};
 

@@ -45,34 +45,44 @@ export const Register = () => {
 	});
 
 	const registerSubmit = async () => {
-		const res = await api.post("/register", {
-			username: formik.values.username,
-			email: formik.values.email,
-			password: formik.values.password,
-		});
-		const data = res.data;
-		const status = res.status;
-		if (status == 201) {
-			makeToast("Failed to login!", "Username already used.", "error");
-		} else if (status == 202) {
-			makeToast("Failed to login!", "Email already used.", "error");
-		} else if (status == 203) {
-			makeToast("Failed to login!", "Incomplete credentials.", "error");
-		} else if (status == 200) {
-			makeToast(
-				"Success to register!",
-				"Redirecting to account panel...",
-				"success"
-			);
-			signIn({
-				token: data.token,
-				tokenType: "Bearer",
-				expiresIn: 30,
-				authState: {
-					token: data.token,
-				},
+		try {
+			const res = await api.post("/register", {
+				username: formik.values.username,
+				email: formik.values.email,
+				password: formik.values.password,
 			});
-			navigate("/admin/account");
+			const data = res.data;
+			const status = res.status;
+			if (status == 201) {
+				makeToast("Failed to login!", "Username already used.", "error");
+			} else if (status == 202) {
+				makeToast("Failed to login!", "Email already used.", "error");
+			} else if (status == 203) {
+				makeToast("Failed to login!", "Incomplete credentials.", "error");
+			} else if (status == 200) {
+				makeToast(
+					"Success to register!",
+					"Redirecting to account panel...",
+					"success"
+				);
+				signIn({
+					token: data.token,
+					tokenType: "Bearer",
+					expiresIn: 30,
+					authState: {
+						token: data.token,
+					},
+				});
+				navigate("/admin/account");
+			}
+		} catch (err) {
+			makeToast(
+				"Error!",
+				"Something wrong with the server, please contact admin",
+				"error"
+			);
+			navigate("/");
+			// console.log(err)
 		}
 	};
 
