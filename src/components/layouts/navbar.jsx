@@ -69,7 +69,9 @@ export const Navbar = () => {
 								<Button leftIcon={<BiUser />}>Account Panel</Button>
 							</Link>
 						)}
-						<Button leftIcon={<BiArchive />}>Creators</Button>
+						<Link href="/creators">
+							<Button leftIcon={<BiArchive />}>Creators</Button>
+						</Link>
 					</ButtonGroup>
 				</HStack>
 			</Flex>
