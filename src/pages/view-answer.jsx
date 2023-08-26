@@ -182,11 +182,12 @@ export const ViewAnswer = () => {
 							/>
 						</VStack>
 					</Flex>
-					<Container textAlign={"center"} justifyContent={"center"} pt={225}>
+					<Center w={"100%"} h={"100%"} px={10}>
 						<Box w="auto" h={"500px"} bgColor={"white"} rounded={10}>
 							<Box
 								w={"100%"}
 								h={"30%"}
+								px={"125px"}
 								top={0}
 								bgImage={"linear-gradient(to bottom right, blue, red)"}
 								roundedTop={10}
@@ -200,7 +201,7 @@ export const ViewAnswer = () => {
 								<Text fontSize={"xl"}>{answerData.answer}</Text>
 							</Center>
 						</Box>
-					</Container>
+					</Center>
 				</Flex>
 			</FullScreen>
 		</>
