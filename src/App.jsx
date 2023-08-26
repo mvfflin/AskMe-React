@@ -12,6 +12,7 @@ import { CreateSession } from "./pages/create-session";
 import { AdminSession } from "./pages/adminsession";
 import { SubmitAnswer } from "./pages/submit-answer";
 import { ViewAnswer } from "./pages/view-answer";
+import { Creators } from "./pages/creators";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -39,6 +40,7 @@ function App() {
 							path="/admin/account/session/:sessionid/view/:answerid"
 							element={<ViewAnswer />}
 						/>
+						<Route path="/creators" element={<Creators />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>
