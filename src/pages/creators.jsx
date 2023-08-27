@@ -8,6 +8,7 @@ import {
 	Heading,
 	IconButton,
 	Link,
+	Stack,
 	Tag,
 	Text,
 	VStack,
@@ -18,10 +19,11 @@ import { BiLogoGithub } from "react-icons/bi";
 export const Creators = () => {
 	return (
 		<Flex
-			pt={250}
+			py={{ base: 250 }}
+			pt={270}
 			id="welcome"
 			w={"full"}
-			h={"100vh"}
+			h={{ base: "auto", md: "100vh" }}
 			bgImage={`linear-gradient(to top, black, #646464), url(${askmcjpg})`}
 			bgPos={"center"}
 			bgRepeat={"no-repeat"}
@@ -32,7 +34,7 @@ export const Creators = () => {
 				<VStack>
 					<Heading color={"white"}>AskMe Creators</Heading>
 
-					<HStack spacing={10}>
+					<Stack spacing={10} direction={{ base: "column", md: "row" }}>
 						<Box w="auto" h={"auto"} bgColor={"gray.700"} rounded={10} p={10}>
 							<Container textAlign={"center"}>
 								<Avatar
@@ -95,7 +97,7 @@ export const Creators = () => {
 								</HStack>
 							</Container>
 						</Box>
-					</HStack>
+					</Stack>
 				</VStack>
 			</Center>
 		</Flex>
