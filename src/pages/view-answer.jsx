@@ -135,7 +135,7 @@ export const ViewAnswer = () => {
 					position={"fixed"}
 				>
 					<Flex
-						m={50}
+						m={{ base: "10px", md: 50 }}
 						p={5}
 						pos={"absolute"}
 						fontSize={"2xl"}
@@ -153,7 +153,16 @@ export const ViewAnswer = () => {
 							</HStack>
 						</VStack>
 					</Flex>
-					<Flex right={0} pos={"absolute"} m={50}>
+					<Flex right={0} pos={"absolute"} m={{ base: "10px", md: 50 }}>
+						<IconButton
+							mr={"7px"}
+							size={"lg"}
+							icon={<FiEye />}
+							onClick={() => {
+								setHide((hide) => !hide);
+							}}
+							display={hide != false ? "flex" : "none"}
+						/>
 						<VStack>
 							<Link href="../">
 								<IconButton
@@ -182,34 +191,45 @@ export const ViewAnswer = () => {
 								}
 								display={hide != false ? "flex" : "none"}
 							/>
-							<IconButton
-								size={"lg"}
-								icon={<FiEye />}
-								onClick={() => {
-									setHide((hide) => !hide);
-								}}
-								display={hide != false ? "flex" : "none"}
-							/>
 						</VStack>
 					</Flex>
 					<Center w={"100%"} h={"100%"} px={10}>
-						<Box w="auto" h={"500px"} bgColor={"white"} rounded={10}>
-							<Box
+						<Box
+							w="auto"
+							h={"max-content"}
+							bgColor={"white"}
+							rounded={10}
+							mt={{ base: 50, md: 0 }}
+						>
+							<Container
 								w={"100%"}
 								h={"30%"}
-								px={"125px"}
 								top={0}
 								bgImage={"linear-gradient(to bottom right, blue, red)"}
 								roundedTop={10}
 								zIndex={2}
+								textAlign={"center"}
 							>
-								<Text py={"50px"} fontSize={"3xl"} textColor={"white"}>
+								<Text
+									py={"50px"}
+									fontSize={{ base: "xl", md: "3xl" }}
+									textColor={"white"}
+									textAlign={"center"}
+								>
 									{sessionData.question}
 								</Text>
-							</Box>
-							<Center w={"100%"} h={"70%"} bgColor={"white"} roundedBottom={10}>
-								<Text fontSize={"xl"}>{answerData.answer}</Text>
-							</Center>
+							</Container>
+							<Container
+								w={"100%"}
+								my={10}
+								bgColor={"white"}
+								roundedBottom={10}
+								wordBreak={"break-all"}
+								px={10}
+								textAlign={"center"}
+							>
+								<Text fontSize={"inherit"}>{answerData.answer}</Text>
+							</Container>
 						</Box>
 					</Center>
 				</Flex>

@@ -124,9 +124,11 @@ export const AdminSession = () => {
 			bgBlendMode={"multiply"}
 		>
 			<Container textAlign={"center"} justifyContent={"center"}>
-				<Box w="auto" h={"auto"} bgColor={"gray.700"} rounded={10} p={10}>
+				<Box w="auto" h={"max-content"} bgColor={"gray.700"} rounded={10}>
 					<Container textAlign={"center"}>
-						<Heading color={"white"}>Session Admin Panel</Heading>
+						<Heading color={"white"} pt={10}>
+							Session Admin Panel
+						</Heading>
 						<Tag size={"lg"} my={5}>
 							{sessionData.question}
 						</Tag>
@@ -156,12 +158,17 @@ export const AdminSession = () => {
 							Answers
 						</Text>
 						<Box overflowY={"auto"} maxHeight={"280px"} mt={5} zIndex={1}>
-							<Table variant={"unstyled"} textAlign={"center"}>
+							<Table
+								variant={"simple"}
+								textAlign={"center"}
+								bgColor={"gray.900"}
+								fontSize={{ base: "sm", md: "lg" }}
+							>
 								<Thead position={"sticky"} top={0} bgColor={"grey"} zIndex={20}>
-									<Tr textColor={"white"}>
-										<Th>ID</Th>
-										<Th>Answers</Th>
-										<Th>Actions</Th>
+									<Tr>
+										<Th textColor={"white"}>ID</Th>
+										<Th textColor={"white"}>Answers</Th>
+										<Th textColor={"white"}>Actions</Th>
 									</Tr>
 								</Thead>
 								<Tbody>
@@ -196,11 +203,17 @@ export const AdminSession = () => {
 								</Tbody>
 							</Table>
 						</Box>
-						<Link href="/admin/account">
-							<Button mt={5} leftIcon={<BiArrowBack />}>
-								Back to Account panel
-							</Button>
-						</Link>
+
+						<Button
+							onClick={() => {
+								navigate("/admin/account");
+							}}
+							mt={5}
+							mb={5}
+							leftIcon={<BiArrowBack />}
+						>
+							Back to Account panel
+						</Button>
 					</Container>
 				</Box>
 			</Container>

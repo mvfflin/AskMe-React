@@ -129,9 +129,9 @@ export const AccountPanel = () => {
 				bgBlendMode={"multiply"}
 			>
 				<Container textAlign={"center"} justifyContent={"center"}>
-					<Box w="auto" h={"auto"} bgColor={"gray.700"} rounded={10} p={10}>
+					<Box w="auto" h={"auto"} bgColor={"gray.700"} rounded={10}>
 						<Container textAlign={"center"}>
-							<Avatar src="" name={decoded?.username} />
+							<Avatar src="" name={decoded?.username} mt={10} />
 							<Text mt={3} fontSize={"2xl"} textColor={"white"}>
 								{decoded?.username}
 							</Text>
@@ -163,7 +163,12 @@ export const AccountPanel = () => {
 								Your sessions
 							</Text>
 							<Box overflowY={"auto"} maxHeight={"280px"} mt={5} zIndex={1}>
-								<Table variant={"unstyled"} textAlign={"center"}>
+								<Table
+									variant={"simple"}
+									textAlign={"center"}
+									bgColor={"gray.900"}
+									fontSize={{ base: "sm", md: "lg" }}
+								>
 									<Thead
 										position={"sticky"}
 										top={0}
@@ -171,7 +176,7 @@ export const AccountPanel = () => {
 										zIndex={20}
 									>
 										<Tr>
-											<Th w={"100px"} textColor={"white"}>
+											<Th minW={"100px"} textColor={"white"}>
 												ID
 											</Th>
 											<Th textColor={"white"}>Question</Th>
@@ -218,6 +223,7 @@ export const AccountPanel = () => {
 								Want to log out?
 							</Text>
 							<Button
+								mb={10}
 								onClick={() => {
 									signOut();
 									navigate("/");
